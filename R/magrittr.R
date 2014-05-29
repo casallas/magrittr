@@ -79,9 +79,9 @@ pipe <- function(tee = FALSE)
       # Case of a function: rare but possible
       res <- withVisible(rhs(env[[nm]]))
 
-    } else if (is.call(rhs) && deparse(rhs[[1]]) == "function") {
+    } else if (is.call(rhs) && deparse(rhs[[1]]) %in% c("function", "::")) {
 
-      # Anonymous function:
+      # Anonymous function, or function name without parens preceded by "::"
       res <- withVisible(eval(rhs, parent.frame(), parent.frame())(
                          eval(lhs, parent.frame(), parent.frame())))
 
